@@ -1,5 +1,4 @@
 <?php
-
 include 'connect.php';
 
 if (isset($_POST['signUp'])) {
@@ -15,19 +14,27 @@ if (isset($_POST['signUp'])) {
     if ($result->num_rows > 0) {
         echo "Email Address Already Exists!";
     } else {
-        // Inserir novo usuário
+        // Inserir novo usuário na logindb
         $stmt = $conn->prepare("INSERT INTO logindb (name, email, password, isAdmin, status) VALUES (?, ?, ?, 0, 1)");
         $stmt->bind_param("sss", $name, $email, $password);
         if ($stmt->execute()) {
-            header("location: index.php");
-            exit();
+            // Inserir na tabela Dono após registro bem-sucedido
+            $id_logindb = $conn->insert_id; // ID gerado para o novo usuário
+            $stmt = $conn->prepare("INSERT INTO Dono (id_logindb, nome, email) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $id_logindb, $name, $email);
+            if ($stmt->execute()) {
+                header("location: index.php");
+                exit();
+            } else {
+                echo "Erro ao inserir no dono: " . $conn->error;
+            }
         } else {
             echo "Error: " . $conn->error;
         }
     }
 }
-
 ?>
+
 
 
 <?php
@@ -45,6 +52,13 @@ if (isset($_POST['signIn'])) {
         if (password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['email'] = $user['email'];
+            $_SESSION['id_logindb'] = $user['id'];
+
+            // Atualizar informações no Dono após login bem-sucedido
+            $stmt = $conn->prepare("UPDATE Dono SET nome = ?, email = ? WHERE id_logindb = ?");
+            $stmt->bind_param("ssi", $user['name'], $email, $user['id']);
+            $stmt->execute();
+
             header("Location: homepage.php");
             exit();
         } else {
