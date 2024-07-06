@@ -1,9 +1,7 @@
 <?php
 session_start();
 include("connect.php");
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,19 +12,24 @@ include("connect.php");
 </head>
 <body>
     <div style="text-align:center; padding:15%;">
-      <p  style="font-size:50px; font-weight:bold;">
-       Hello  <?php 
-       if(isset($_SESSION['email'])){
-        $email=$_SESSION['email'];
-        $query=mysqli_query($conn, "SELECT users.* FROM `users` WHERE users.email='$email'");
-        while($row=mysqli_fetch_array($query)){
-            echo $row['firstName'].' '.$row['lastName'];
-        }
-       }
-       ?>
-       :)
-      </p>
-      <a href="logout.php">Logout</a>
+        <p style="font-size:50px; font-weight:bold;">
+            Hello
+            <?php 
+            if (isset($_SESSION['email'])) {
+                $email = $_SESSION['email'];
+                // Usar declarações preparadas para evitar injeção de SQL
+                $stmt = $conn->prepare("SELECT name FROM logindb WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    echo $row['name'];
+                }
+            }
+            ?> :)
+        </p>
+        <a href="logout.php">Logout</a>
     </div>
 </body>
 </html>

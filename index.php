@@ -1,3 +1,8 @@
+<?php 
+
+include 'connect.php'; 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +17,9 @@
       <h1 class="form-title">Register</h1>
       <form method="post" action="register.php">
         <div class="input-group">
-           <i class="fas fa-user"></i>
-           <input type="text" name="fName" id="fName" placeholder="First Name" required>
-           <label for="fname">First Name</label>
+            <i class="fas fa-user"></i>
+            <input type="text" name="fName" id="fName" placeholder="First Name" required>
+            <label for="fname">First Name</label>
         </div>
         <div class="input-group">
             <i class="fas fa-user"></i>
