@@ -1,0 +1,80 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif; /* Uniformiza a fonte */
+}
+
+body{
+    background-image: url(./dognoceu.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px; /* Aumenta o espaço entre os itens */
+    padding: 20px; /* Espaço interno no container */
+    margin: auto; /* Centraliza o container na página */
+    max-width: 1200px; /* Limita a largura máxima do container */
+}
+
+.grid-item {
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    padding: 15px; /* Aumenta o padding para dar mais espaço ao conteúdo */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra mais pronunciada para melhor estética */
+    transition: transform 0.3s; /* Animação suave ao passar o mouse */
+}
+
+.grid-item:hover {
+    transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+}
+
+.grid-item h3 {
+    margin-top: 0;
+    color: #161414; /* Cor mais escura para o título */
+    font-size: 18px; /* Aumenta o tamanho da fonte do título */
+}
+
+.grid-item p {
+    font-size: 16px; /* Aumenta o tamanho da fonte dos parágrafos */
+    color: #636363; /* Cor mais suave para os parágrafos */
+    margin-top: 5px; /* Espaçamento entre o título e os parágrafos */
+}
+
+img {
+    max-width: 100%; /* Garante que a imagem não exceda o contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block; /* Remove qualquer espaço abaixo da imagem */
+    margin-top: 10px; /* Espaço acima da imagem */
+    border-radius: 20px;
+}
+
+/* Respostas para diferentes tamanhos de tela */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas para tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas para telas pequenas */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr; /* 1 coluna para celulares */
+        padding: 10px;
+    }
+    .grid-item {
+        padding: 10px; /* Reduz o padding em dispositivos móveis */
+    }
+}
